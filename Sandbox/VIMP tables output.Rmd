@@ -1,0 +1,37 @@
+---
+title: "Variable importance results"
+output:
+  html_document:
+    toc: true
+  github_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Source the script that creates result_raw and result_ranked
+source("load_vimp_tables.R")
+```
+
+## Raw values
+
+```{r raw-table}
+knitr::kable(
+  result_raw,
+  digits = 3,
+  caption = "Raw variable importance measures and estimated effects"
+)
+```
+
+## Ranks
+
+Rank 1 indicates the variable ranked as most important. For minimal depth,
+smaller values receive better ranks.
+
+```{r ranked-table}
+knitr::kable(
+  result_ranked,
+  digits = 0,
+  caption = "Ranks of variable importance measures and estimated effects"
+)
+```
