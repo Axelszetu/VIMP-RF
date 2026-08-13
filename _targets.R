@@ -12,7 +12,7 @@ list(
   tar_target(
     name = simulated_data,
     command = {
-      sim_OHCA_ECG_data(1000)
+      sim_OHCA_ECG_data(1000, effects_first_order, effects_interactions)
     }
   ),
   tar_target(
@@ -54,7 +54,7 @@ list(
   tar_target(
     name = vimp_table,
     command = {
-      make_vimp_table(perm_vimp, minimal_depth_vimp, ATE_rf, ATE_logreg, effects)
+      make_vimp_table(perm_vimp, minimal_depth_vimp, ATE_rf, ATE_logreg, effects_first_order)
     }
   )
 )

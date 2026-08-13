@@ -1,16 +1,12 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-simulated_data|stem|95a00f7e48e4010d|047826aab705d7da|665088a66862910b|1727276764||t20671.5387413502s|s7040b|7040|rds|local|vector|||19.28|package 'riskRegression' was built under R version 4.6.1. package 'lava' was built under R version 4.6.1. package 'randomForestSRC' was built under R version 4.6.1|
-rf_model_bin|stem|aea4698a2256f233|17cc4f2622a865c7|f5646ae6c2b097c5|1871549305||t20671.5387443214s|s485663b|485663|rds|local|vector|||0.05||
-perm_vimp|stem|8258e762780d6218|7dec5c64f169ae3b|a19f5fe0ec14b1c5|396670438||t20671.5387473559s|s600b|600|rds|local|vector|||0.08||
-ATE_rf|stem|f6bd54ec016ecb1e|328790e5bed364fc|e58461afecce3b76|1665588928||t20671.5387692696s|s833b|833|rds|local|vector|||1.84||
-minimal_depth_vimp|stem|7d273f9f1dc185d1|a1d9eb52e38cda12|4e5a500b536c2723|-1475770726||t20671.5387726672s|s590b|590|rds|local|vector|||0.22||
-logreg_model|stem|80b33e18fdfdebb6|dc5e70ce14b97e5a|f51bcff323d1b52a|-1835366098||t20671.5411772774s|s407915b|407915|rds|local|vector|||0.05|glm.fit: fitted probabilities numerically 0 or 1 occurred|
+effects|object|4c9343a51c07e91e
 covar_no_age|object|bcf914159b539a98
 covar|object|e976d2f850a7444e
+effects_interactions|object|c980c1b0189b9f44
+effects_first_order|object|f2d53cddd04f155f
 drugs|object|fa2535e73653d350
 comorbs|object|c8b9000e67f3f34d
 s|function|537996f04e925385
-effects|object|4c9343a51c07e91e
 sim_parameters|object|08d5f59e833de599
 get_perm_vimp|function|ed003a077d3a5e7f
 abnorm_cols|object|aa445c2816858adc
@@ -20,6 +16,12 @@ get_ATE_logreg|function|c79ccfc91d6e305c
 fit_logreg_model|function|0f7f532fa67cfbdb
 get_ATE_rf|function|44b1f7b4f4f05162
 fit_rf_model_bin|function|8f74a17d9f19c1f7
-sim_OHCA_ECG_data|function|1c096951f74add06
-ATE_logreg|stem|1b18d10b1bd7d47e|50f9d622d291a71d|d4ac2e90895fd9e6|-1633090596||t20671.5423900314s|s837b|837|rds|local|vector|||1.11|prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases. prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases. prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases. prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases|
-vimp_table|stem|c7c9f1db19fab68a|64f37e9557150ab8|94662146d0037a32|-1701811083||t20671.542393113s|s2133b|2133|rds|local|vector|||0.01||
+sim_OHCA_ECG_data|function|ba04817ee32d9dfb
+simulated_data|stem|1cf97c95351d771d|4fdd3dc1f16aba8c|b4fbbf9ec4ff7de7|1727276764||t20678.6083535738s|s4686b|4686|rds|local|vector|||7.94|package 'riskRegression' was built under R version 4.6.1. package 'lava' was built under R version 4.6.1. package 'randomForestSRC' was built under R version 4.6.1|
+rf_model_bin|stem|58953036c37189ca|17cc4f2622a865c7|7b79700b6a77f3ea|1871549305||t20678.6083556417s|s501865b|501865|rds|local|vector|||0.02||
+logreg_model|stem|cfd81cfb65e0d40e|dc5e70ce14b97e5a|2eb432adf81fdc03|-1835366098||t20678.6083568565s|s398788b|398788|rds|local|vector|||0.03||
+perm_vimp|stem|5c0be6bfdaaa62c1|7dec5c64f169ae3b|45831ac1db334fa1|396670438||t20678.6083581909s|s613b|613|rds|local|vector|||0.06||
+ATE_rf|stem|6c690a57b602adcc|328790e5bed364fc|1c4d41771295ea71|1665588928||t20678.6083722744s|s840b|840|rds|local|vector|||1.19||
+minimal_depth_vimp|stem|c2f533615a5e37c2|a1d9eb52e38cda12|bdb9d6c772ead13e|-1475770726||t20678.608374634s|s578b|578|rds|local|vector|||0.17||
+ATE_logreg|stem|a02b010596c77c0d|50f9d622d291a71d|14380f8e4b15e7de|-1633090596||t20678.6083815563s|s846b|846|rds|local|vector|||0.56|prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases. prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases. prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases. prediction from rank-deficient fit; attr(, 'non-estim') has doubtful cases|
+vimp_table|stem|4c3503fa965f3ec7|e54df297285cc605|811a1c5c272b7de8|-1701811083||t20678.6083823718s|s1889b|1889|rds|local|vector|||0||
