@@ -8,3 +8,14 @@ effects_first_order <- c(rep(1,4), rep(0.5,4), numeric(length = 34))
 effects_interactions <- c(1,1,1)
 names(effects_interactions) <- c("1x2", "5x6", "9x10")
 names(effects_first_order) <- c("sex", abnorm_cols, drugs, comorbs)
+
+#Hyperparameters to examine
+mtry_parameters <- c(3,8,16)
+nodesize_parameters <- c(1,5,20)
+ntree_parameters <- c(250, 500, 2000)
+lambda_parameters <- c(0.1, 0.55, 1)
+parameter_sizes_names <- c("low", "medium", "high")
+names(mtry_parameters) <- parameter_sizes_names
+names(nodesize_parameters) <- parameter_sizes_names
+names(ntree_parameters) <- parameter_sizes_names
+names(lambda_parameters) <- parameter_sizes_names
