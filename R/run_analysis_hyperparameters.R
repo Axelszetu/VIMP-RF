@@ -9,17 +9,6 @@ if (FALSE){
 run_analaysis_hyperparameters <- function(n, effects_first_order, effects_interactions, rf_hyperparameter_settings){
   simulated_data <- sim_OHCA_ECG_data(n = n, effects_first_order = effects_first_order, effects_interactions = effects_interactions)
   rf_results <- vector(mode = 'list', length = length(rf_hyperparameter_settings))
-  for (setting in rf_hyperparameter_settings){
-    mtry <- setting[1]
-    nodesize <- setting[2]
-    ntree <- setting[3]
-    rf_model_bin <- fit_rf_model_bin(simulated_data = simulated_data, ntree = ntree, mtry = mtry, nodesize = nodesize)
-    perm_vimp <- get_perm_vimp(rf_model_bin = rf_model_bin)
-    minimal_depth_vimp <- get_minimal_depth_vimp(rf_model_bin = rf_model_bin)
-    ATE_rf <- get_ATE_rf(rf_model_bin = rf_model_bin, simulated_data = simulated_data)
-    rf_result_table_numeric <- 
-    rf_result_table_rank <- 
-    rf_result_tables <- list(rf_result_table_numeric, rf_result_table_rank)
-    rf_results[setting] <- rf_result_tables
-  }
+  names(rf_results) <- names(rf_hyperparameter_settings)
+  
 }
