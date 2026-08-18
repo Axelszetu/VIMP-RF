@@ -3,16 +3,11 @@ if (FALSE){
   ntree_parameters <- c(3,5,20)
   names(ntree_parameters) <- parameter_sizes_names
   rf_hyperparameter_settings <- make_rf_hyperparameter_settings(mtry_parameters = mtry_parameters, nodesize_parameters = nodesize_parameters, ntree_parameters = ntree_parameters)
-  for (setting in rf_hyperparameter_settings){
-    print(nameof(setting))
-  }
   system.time(run_analaysis_hyperparameters(n = 2000, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings))
 }
 
 run_analaysis_hyperparameters <- function(n, effects_first_order, effects_interactions, rf_hyperparameter_settings){
   simulated_data <- sim_OHCA_ECG_data(n = n, effects_first_order = effects_first_order, effects_interactions = effects_interactions)
-  #rf_results <- vector(mode = 'list', length = length(rf_hyperparameter_settings))
-  #names(rf_results) <- names(rf_hyperparameter_settings)
   rf_results <- lapply(
     rf_hyperparameter_settings,
     function(setting){
