@@ -1,2 +1,2 @@
 # VIMP-RF
-Investigate use of Variable Importance Measures for Ranfom Forests
+Investigate use of Variable Importance Measures for Random Forests
