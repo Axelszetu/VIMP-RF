@@ -12,7 +12,8 @@ names(effects_first_order) <- c("sex", abnorm_cols, drugs, comorbs)
 #Hyperparameters to examine
 mtry_parameters <- c(3,8,16)
 nodesize_parameters <- c(1,5,20)
-ntree_parameters <- c(250, 500, 2000)
+#ntree_parameters <- c(250, 500, 2000)
+ntree_parameters <- c(25, 50, 200)
 lambda_parameters <- c(0.1, 0.55, 1)
 parameter_sizes_names <- c("low", "medium", "high")
 names(mtry_parameters) <- parameter_sizes_names
