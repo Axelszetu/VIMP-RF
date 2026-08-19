@@ -8,8 +8,6 @@ tar_option_set(
 
 tar_source("R")
 
-#ntree_parameters <- c(25, 50, 200)
-
 list(
   tar_target(
     name = simulated_data,
@@ -68,5 +66,11 @@ list(
     },
     batches = 2,
     reps = 2
+  ),
+  tar_target(
+    name = rf_hyperparameter_results_tables,
+    command = {
+      rf_hyperparameter_results_tables <- make_rf_hyperparameter_results_tables(rf_hyperparameter_results = rf_hyperparameter_results, variable_names = names(effects_first_order)[1:10])
+    }
   )
 )
