@@ -49,5 +49,20 @@ make_rf_hyperparameter_results_tables <- function(rf_hyperparameter_results, var
   
   names(result) <- measures
   
+  logreg_rank <- simulation_results_long |>
+    dplyr::filter(
+      measure == "ATE_logreg",
+      scale == "rank",
+      variable %in% variable_names
+    ) |>
+    dplyr::group_by(variable) |>
+    dplyr::summarise(
+      mean_rank = mean(value, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::arrange(match(variable, variable_names))
+  
+  result$ATE_logreg <- logreg_rank
+  
   return(result)
 }

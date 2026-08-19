@@ -21,6 +21,6 @@ run_analaysis_hyperparameters <- function(n, effects_first_order, effects_intera
   ATE_logreg <- get_ATE_logreg(logreg_model, simulated_data)
   results <- rf_results
   results$logreg$ATE_logreg$numeric <- ATE_logreg
-  results$logreg$ATE_logreg$rank <- rank(ATE_logreg)
+  results$logreg$ATE_logreg$rank <- rank(-abs(ATE_logreg))
   return(results)
 }
