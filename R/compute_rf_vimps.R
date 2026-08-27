@@ -12,7 +12,6 @@ compute_rf_vimps <- function(setting, simulated_data){
   minimal_depth_vimp <- get_minimal_depth_vimp(rf_model_bin = rf_model_bin)
   ATE_rf <- get_ATE_rf(rf_model_bin = rf_model_bin, simulated_data = simulated_data)
   rf_result_table_numeric <- list(perm = perm_vimp, md = minimal_depth_vimp, ATE = ATE_rf)
-  rf_result_table_rank <- list(perm = rank(-perm_vimp), md = rank(minimal_depth_vimp), ATE = rank(-abs(ATE_rf)))
-  out <- list(numeric = rf_result_table_numeric, rank = rf_result_table_rank)
+  out <- list(numeric = rf_result_table_numeric)
   return(out)
 }

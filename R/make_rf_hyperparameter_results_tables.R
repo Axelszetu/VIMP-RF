@@ -36,7 +36,7 @@ make_rf_hyperparameter_results_tables <- function(rf_hyperparameter_results, var
         hyperparameter_settings,
         function(settings) {
           
-          make_rank_table(
+          make_average_rank_table(
             simulation_results_long,
             measure_name = measure_name,
             settings = settings,

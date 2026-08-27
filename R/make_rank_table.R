@@ -1,5 +1,5 @@
 #Function for making table comparing average vimp rank across values of a single hyperparameter
-make_rank_table <- function(
+make_average_rank_table <- function(
     simulation_results_long,
     measure_name,
     settings,

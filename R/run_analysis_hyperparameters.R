@@ -6,7 +6,7 @@ if (FALSE){
   system.time(run_analaysis_hyperparameters(n = 2000, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings))
 }
 
-run_analaysis_hyperparameters <- function(n, effects_first_order, effects_interactions, rf_hyperparameter_settings){
+run_analysis_hyperparameters <- function(n, effects_first_order, effects_interactions, rf_hyperparameter_settings){
   simulated_data <- sim_OHCA_ECG_data(n = n, effects_first_order = effects_first_order, effects_interactions = effects_interactions)
   rf_results <- lapply(
     rf_hyperparameter_settings,
@@ -20,7 +20,6 @@ run_analaysis_hyperparameters <- function(n, effects_first_order, effects_intera
   logreg_model <- fit_logreg_model(simulated_data)
   ATE_logreg <- get_ATE_logreg(logreg_model, simulated_data)
   results <- rf_results
-  results$logreg$ATE_logreg$numeric <- ATE_logreg
-  results$logreg$ATE_logreg$rank <- rank(-abs(ATE_logreg))
+  results$logreg$numeric$ATE_logreg <- ATE_logreg
   return(results)
 }

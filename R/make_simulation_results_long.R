@@ -1,105 +1,47 @@
-#Function for taking a target created with tar_rep and creating a long format data frame to use for summary
+#
 make_simulation_results_long <- function(rf_hyperparameter_results) {
   
-  x <- rf_hyperparameter_results
-  
-  # Identify the metadata entries marking the end of each repetition
-  rep_positions <- which(grepl("_tar_rep$", names(x)))
-  
-  out <- vector("list", length(rep_positions))
-  
-  start_pos <- 1
-  
-  for (i in seq_along(rep_positions)) {
-    
-    rep_pos <- rep_positions[i]
-    
-    # tar_batch, tar_rep, tar_seed occur at the end of each repetition
-    batch_pos <- rep_pos - 1
-    seed_pos <- rep_pos + 1
-    
-    batch <- x[[batch_pos]]
-    rep <- x[[rep_pos]]
-    
-    # Everything before tar_batch belongs to this repetition
-    result_positions <- start_pos:(batch_pos - 1)
-    
-    simulation_result <- x[result_positions]
-    
-    simulation_id <- i
-    
-    rep_df <- list()
-    k <- 1
-    
-    for (j in seq_along(simulation_result)) {
-      
-      object_name <- names(simulation_result)[j]
-      object <- simulation_result[[j]]
-      
-      # Remove target/hash prefix and keep only setting name
-      setting <- sub(
-        "^rf_hyperparameter_results_[^_]+_",
-        "",
-        object_name
-      )
-      
-      if (setting != "logreg") {
+  simulation_results_long <- dplyr::bind_rows(
+    lapply(
+      seq_along(rf_hyperparameter_results),
+      function(simulation_id) {
         
-        # RF structure:
-        # setting -> scale -> measure -> named vector
-        for (scale in names(object)) {
-          
-          for (measure in names(object[[scale]])) {
-            
-            values <- object[[scale]][[measure]]
-            
-            rep_df[[k]] <- data.frame(
-              simulation = simulation_id,
-              setting = setting,
-              variable = names(values),
-              measure = measure,
-              scale = scale,
-              value = unname(values),
-              stringsAsFactors = FALSE
-            )
-            
-            k <- k + 1
-          }
-        }
+        simulation_result <- rf_hyperparameter_results[[simulation_id]]$numeric
         
-      } else {
-        
-        # Logistic regression structure:
-        # logreg -> ATE_logreg -> scale -> named vector
-        logreg <- object$ATE_logreg
-        
-        for (scale in names(logreg)) {
-          
-          values <- logreg[[scale]]
-          
-          rep_df[[k]] <- data.frame(
-            simulation = simulation_id,
-            setting = "logreg",
-            variable = names(values),
-            measure = "ATE_logreg",
-            scale = scale,
-            value = unname(values),
-            stringsAsFactors = FALSE
+        dplyr::bind_rows(
+          lapply(
+            names(simulation_result),
+            function(setting_name) {
+              
+              result <- simulation_result[[setting_name]]
+              
+              result |>
+                tibble::rownames_to_column("variable") |>
+                tidyr::pivot_longer(
+                  cols = -variable,
+                  names_to = "measure",
+                  values_to = "value"
+                ) |>
+                dplyr::mutate(
+                  simulation = simulation_id,
+                  setting = setting_name
+                )
+            }
           )
-          
-          k <- k + 1
-        }
+        )
       }
-    }
-    
-    out[[i]] <- do.call(rbind, rep_df)
-    
-    # Next repetition starts after tar_seed
-    start_pos <- seed_pos + 1
-  }
+    )
+  )
+  simulation_results_long <- simulation_results_long |>
+    dplyr::group_by(simulation, setting, measure) |>
+    dplyr::mutate(
+      rank = if (dplyr::first(measure) == "md") {
+        stats::rank(value)
+      } else {
+        stats::rank(-abs(value))
+      }
+    ) |>
+    dplyr::ungroup()
   
-  out <- do.call(rbind, out)
-  rownames(out) <- NULL
-  
-  out
+  return(simulation_results_long)
 }
