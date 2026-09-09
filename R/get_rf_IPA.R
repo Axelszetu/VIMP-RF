@@ -4,7 +4,7 @@ get_rf_IPA <- function(rf_IPA_data, setting, covars){
   mtry <- setting[[1]]
   nodesize <- setting[[2]]
   ntree <- setting[[3]]
-  rf_model_bin <- fit_rf_model_bin(simulated_data = rf_IPA_data, ntree = ntree, mtry = mtry, nodesize = nodesize, covars)
+  rf_model_bin <- fit_rf_model_bin(simulated_data = train, ntree = ntree, mtry = mtry, nodesize = nodesize, covars)
   ff <- as.formula(paste("Y ~", paste(covars, collapse = "+")))
   out <- riskRegression::Score(list(rf_model_bin),
                                data = test,

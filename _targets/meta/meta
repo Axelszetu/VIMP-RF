@@ -60,4 +60,34 @@ make_rf_hyperparameter_results_tables|function|4bb8ab828f6fb50a
 get_rf_IPA|function|210677ea12010e60
 compute_rf_vimps|function|eb7ca59a79324473
 run_analysis_hyperparameters|function|37d95574aa228fb4
-rf_IPA_by_lambda|stem|d8da520ef34def9c|bb1c8bb535e8dd06|e7b1e258e5ce8ee8|-859746576||t20705.5525329094s|s963b|963|rds|local|vector|||17.27|package 'riskRegression' was built under R version 4.6.1. package 'lava' was built under R version 4.6.1. package 'randomForestSRC' was built under R version 4.6.1|
+rf_IPA_by_lambda|stem|98a956e62f7ff05f|68746ac3731362d7|e7b1e258e5ce8ee8|-859746576||t20705.5982754301s|s1043b|1043|rds|local|vector|||19.28|package 'riskRegression' was built under R version 4.6.1. package 'lava' was built under R version 4.6.1. package 'randomForestSRC' was built under R version 4.6.1|
+ntree_parameters|object|a397590fff25b390
+drugs|object|fa2535e73653d350
+covar|object|e976d2f850a7444e
+get_perm_vimp|function|ed003a077d3a5e7f
+sim_parameters|object|08d5f59e833de599
+parameter_sizes_names|object|bd324c7055620db4
+get_minimal_depth_vimp|function|b965ffcf0f2d87ad
+make_rf_hyperparameter_settings|function|a7c1d9947d04a2be
+synthesize_ECG_OHCA_Rcode|function|537996f04e925385
+covar_no_age|object|bcf914159b539a98
+abnorm_cols|object|aa445c2816858adc
+make_vimp_table|function|4fba0df0637ad4e9
+make_rank_distribution_plot|function|2ffa2d0b1b8194ab
+nodesize_parameters|object|a99888e749a49801
+comorbs|object|c8b9000e67f3f34d
+make_average_rank_table|function|64a28f383f81369a
+effects_first_order|object|f2d53cddd04f155f
+make_simulation_results_long|function|91e79934c7faa388
+mtry_parameters|object|c7f798a490a4e95a
+effects_interactions|object|c980c1b0189b9f44
+lambda_parameters|object|949993da821ed89e
+sim_OHCA_ECG_data|function|a8587698222b8989
+fit_logreg_model|function|0f7f532fa67cfbdb
+get_ATE_logreg|function|c79ccfc91d6e305c
+fit_rf_model_bin|function|ff60f8b840e3f6b5
+get_ATE_rf|function|44b1f7b4f4f05162
+make_rf_hyperparameter_results_tables|function|4bb8ab828f6fb50a
+get_rf_IPA|function|60cbf1a57aec662c
+compute_rf_vimps|function|eb7ca59a79324473
+run_analysis_hyperparameters|function|37d95574aa228fb4
