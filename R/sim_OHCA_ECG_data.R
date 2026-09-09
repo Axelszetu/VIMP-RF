@@ -15,7 +15,7 @@ sim_OHCA_ECG_data <- function(n = 100, effects_first_order, effects_interactions
       interaction_term[i] <- unlist(data1[i,1]*data1[i,2]*effects_interactions[1]) + unlist(data1[i,5]*data1[i,6]*effects_interactions[2]) + unlist(data1[i,9]*data1[i,10]*effects_interactions[3])
     }
   }
-  data1$expected_outcome <- plogis(q = first_order_term + interaction_term, location = 0.5)
+  data1$expected_outcome <- plogis(q = first_order_term + interaction_term)
   outcome <- rbinom(n = n, size = 1, prob = data1$expected_outcome)
   data1$Y <- as.factor(outcome)
   return(data1)
