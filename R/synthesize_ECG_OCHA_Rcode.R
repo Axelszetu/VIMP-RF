@@ -1,4 +1,4 @@
-s <- function(n){
+synthesize_ECG_OHCA_Rcode <- function(n){
     sim_model <- lava::lvm()
 lava::distribution(sim_model,~sex) <- lava::binomial.lvm(p=0.47534)
 lava::transform(sim_model, new_eventX1~new_event) <- function(x){1*(c(x)=='X1')}
