@@ -3,17 +3,18 @@ if (FALSE){
   ntree_parameters <- c(3,5,20)
   names(ntree_parameters) <- parameter_sizes_names
   rf_hyperparameter_settings <- make_rf_hyperparameter_settings(mtry_parameters = mtry_parameters, nodesize_parameters = nodesize_parameters, ntree_parameters = ntree_parameters)
-  system.time(run_analaysis_hyperparameters(n = 2000, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings))
+  system.time(run_analysis_hyperparameters(n = 2000, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings))
 }
 
-run_analysis_hyperparameters <- function(n, effects_first_order, effects_interactions, rf_hyperparameter_settings){
+run_analysis_hyperparameters <- function(n, effects_first_order, effects_interactions, rf_hyperparameter_settings, covars){
   simulated_data <- sim_OHCA_ECG_data(n = n, effects_first_order = effects_first_order, effects_interactions = effects_interactions)
   rf_results <- lapply(
     rf_hyperparameter_settings,
     function(setting){
       compute_rf_vimps(
         setting = setting,
-        simulated_data = simulated_data
+        simulated_data = simulated_data,
+        covars = covars
       )
     }
   )

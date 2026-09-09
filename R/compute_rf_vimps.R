@@ -3,11 +3,11 @@ if(FALSE){
   setting <- reference
   setting[[3]] <- 5
 }
-compute_rf_vimps <- function(setting, simulated_data){
+compute_rf_vimps <- function(setting, simulated_data, covars){
   mtry <- setting[[1]]
   nodesize <- setting[[2]]
   ntree <- setting[[3]]
-  rf_model_bin <- fit_rf_model_bin(simulated_data = simulated_data, ntree = ntree, mtry = mtry, nodesize = nodesize)
+  rf_model_bin <- fit_rf_model_bin(simulated_data = simulated_data, ntree = ntree, mtry = mtry, nodesize = nodesize, covars)
   perm_vimp <- get_perm_vimp(rf_model_bin = rf_model_bin)
   minimal_depth_vimp <- get_minimal_depth_vimp(rf_model_bin = rf_model_bin)
   ATE_rf <- get_ATE_rf(rf_model_bin = rf_model_bin, simulated_data = simulated_data)
