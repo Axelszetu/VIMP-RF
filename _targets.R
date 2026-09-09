@@ -57,6 +57,23 @@ list(
       make_vimp_table(perm_vimp, minimal_depth_vimp, ATE_rf, ATE_logreg, effects_first_order)
     }
   ),
+  tar_target(
+    name = rf_IPA_by_lambda,
+    command = {
+      ORs <- c(7:9)
+      lambdas <- log(ORs)
+      names(lambdas) <- as.character(lambdas)
+      rf_IPAs <- lapply(lambdas, function(lambda){
+        effects_first_order <- c(0, lambda, numeric(length = 40))
+        setting <- c(17,20,100)
+        IPA_data <- sim_OHCA_ECG_data(n = 40000, effects_first_order = effects_first_order)
+        out <- get_rf_IPA(rf_IPA_data = IPA_data, setting = setting, covars = abnorm_cols)
+        return(out)
+        }
+      )
+      rf_IPAs
+    }
+  ),
   tar_rep(
     name = rf_hyperparameter_results,
     command = {
