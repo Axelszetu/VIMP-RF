@@ -60,18 +60,10 @@ list(
   tar_target(
     name = rf_IPA_by_lambda,
     command = {
-      ORs <- c(7:9)
-      lambdas <- log(ORs)
-      names(lambdas) <- as.character(lambdas)
-      rf_IPAs <- lapply(lambdas, function(lambda){
-        effects_first_order <- c(0, lambda, numeric(length = 40))
-        setting <- c(17,20,100)
-        IPA_data <- sim_OHCA_ECG_data(n = 40000, effects_first_order = effects_first_order)
-        out <- get_rf_IPA(rf_IPA_data = IPA_data, setting = setting, covars = abnorm_cols)
-        return(out)
-        }
+      get_rf_IPA_by_lambda(
+        ORs = 10:12,
+        covars = abnorm_cols
       )
-      rf_IPAs
     }
   ),
   tar_rep(
