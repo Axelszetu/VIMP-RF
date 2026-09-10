@@ -61,7 +61,7 @@ list(
     name = rf_IPA_by_lambda,
     command = {
       get_rf_IPA_by_lambda(
-        ORs = 10:12,
+        ORs = c(15,20,25),
         covars = abnorm_cols
       )
     }
@@ -70,7 +70,7 @@ list(
     name = rf_hyperparameter_results,
     command = {
       rf_hyperparameter_settings <- make_rf_hyperparameter_settings(mtry_parameters = mtry_parameters, nodesize_parameters = nodesize_parameters, ntree_parameters = ntree_parameters)
-      result <- run_analysis_hyperparameters(n = 200, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings = rf_hyperparameter_settings)
+      result <- run_analysis_hyperparameters(n = 200, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings = rf_hyperparameter_settings, covars = abnorm_cols)
       result
     },
     batches = 2,
@@ -79,7 +79,7 @@ list(
   tar_target(
     name = rf_hyperparameter_results_tables,
     command = {
-      rf_hyperparameter_results_tables <- make_rf_hyperparameter_results_tables(rf_hyperparameter_results = rf_hyperparameter_results, variable_names = names(effects_first_order)[1:10])
+      rf_hyperparameter_results_tables <- make_rf_hyperparameter_results_tables(rf_hyperparameter_results = rf_hyperparameter_results, variable_names = abnorm_cols)
     }
   ),
   tar_rep(
