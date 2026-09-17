@@ -19,7 +19,7 @@ run_analysis_hyperparameters <- function(n, effects_first_order, effects_interac
     }
   )
   logreg_model <- fit_logreg_model(simulated_data)
-  ATE_logreg <- get_ATE_logreg(logreg_model, simulated_data)
+  ATE_logreg <- get_ATE_logreg(logreg_model, simulated_data, covars = covars)
   results <- rf_results
   results$logreg$numeric$ATE_logreg <- ATE_logreg
   return(results)

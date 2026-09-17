@@ -10,7 +10,7 @@ compute_rf_vimps <- function(setting, simulated_data, covars){
   rf_model_bin <- fit_rf_model_bin(simulated_data = simulated_data, ntree = ntree, mtry = mtry, nodesize = nodesize, covars)
   perm_vimp <- get_perm_vimp(rf_model_bin = rf_model_bin)
   minimal_depth_vimp <- get_minimal_depth_vimp(rf_model_bin = rf_model_bin)
-  ATE_rf <- get_ATE_rf(rf_model_bin = rf_model_bin, simulated_data = simulated_data)
+  ATE_rf <- get_ATE_rf(rf_model_bin = rf_model_bin, simulated_data = simulated_data, covars)
   rf_result_table_numeric <- list(perm = perm_vimp, md = minimal_depth_vimp, ATE = ATE_rf)
   out <- list(numeric = rf_result_table_numeric)
   return(out)
