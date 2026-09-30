@@ -1,4 +1,5 @@
-make_simulation_results_long <- function(rf_hyperparameter_results) {
+make_simulation_results_long <- function(rf_hyperparameter_results,
+                                         rank_covars = abnorm_cols) {
   
   x <- rf_hyperparameter_results
   
@@ -71,6 +72,7 @@ make_simulation_results_long <- function(rf_hyperparameter_results) {
               function(measure_name) {
                 
                 values <- numeric_result[[measure_name]]
+                validate_covars(rank_covars, names(values), "rank_covars")
                 
                 data.frame(
                   simulation = i,
@@ -88,9 +90,10 @@ make_simulation_results_long <- function(rf_hyperparameter_results) {
       )
     )
     
-    # Calculate ranks separately within each simulation,
-    # setting and VIMP measure.
+    # Keep all computed numeric values, but compare only rank_covars.
+    # Calculate ranks separately within each simulation, setting and measure.
     rank_df <- numeric_df |>
+      dplyr::filter(variable %in% rank_covars) |>
       dplyr::group_by(
         simulation,
         setting,

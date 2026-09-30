@@ -1,12 +1,14 @@
 #Function for making plot of MC distribution of variable importance measures
 make_rank_distribution_plot <- function(
     plot_data,
-    variables,
+    variables = unique(as.character(plot_data$variable)),
     conf_level = 0.95,
     n_boot = 2000,
     show_violin = TRUE,
     show_errorbar = TRUE
 ) {
+  #Only select displayed variables; retain their previously computed ranks.
+  validate_covars(variables, as.character(plot_data$variable), "variables")
   
   library(ggplot2)
   library(dplyr)

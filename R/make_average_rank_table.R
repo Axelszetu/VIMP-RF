@@ -3,8 +3,21 @@ make_average_rank_table <- function(
     simulation_results_long,
     measure_name,
     settings,
-    variable_names
+    variable_names = unique(simulation_results_long$variable[
+      simulation_results_long$scale == "rank" &
+      simulation_results_long$measure == measure_name &
+      simulation_results_long$setting %in% settings
+    ])
 ) {
+  #These ranks have already been computed within the chosen comparison set.
+  for (setting_name in settings) {
+    available <- simulation_results_long$variable[
+      simulation_results_long$scale == "rank" &
+      simulation_results_long$measure == measure_name &
+      simulation_results_long$setting == setting_name
+    ]
+    validate_covars(variable_names, available, "variable_names")
+  }
   simulation_results_long |>
     dplyr::filter(
       measure == measure_name,

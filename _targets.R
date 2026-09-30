@@ -18,7 +18,7 @@ list(
   tar_target(
     name = rf_model_bin,
     command = {
-      fit_rf_model_bin(simulated_data)
+      fit_rf_model_bin(simulated_data, covars = covar_no_age)
     }
   ),
   tar_target(
@@ -36,25 +36,26 @@ list(
   tar_target(
     name = ATE_rf,
     command = {
-      get_ATE_rf(rf_model_bin, simulated_data)
+      get_ATE_rf(rf_model_bin, simulated_data, covars = abnorm_cols)
     }
   ),
   tar_target(
     name = logreg_model,
     command = {
-      fit_logreg_model(simulated_data)
+      fit_logreg_model(simulated_data, covars = covar_no_age)
     }
   ),
   tar_target(
     name = ATE_logreg,
     command = {
-      get_ATE_logreg(logreg_model, simulated_data)
+      get_ATE_logreg(logreg_model, simulated_data, covars = abnorm_cols)
     }
   ),
   tar_target(
     name = vimp_table,
     command = {
-      make_vimp_table(perm_vimp, minimal_depth_vimp, ATE_rf, ATE_logreg, effects_first_order)
+      make_vimp_table(perm_vimp, minimal_depth_vimp, ATE_rf, ATE_logreg, effects_first_order,
+                      rank_covars = abnorm_cols, variable_names = abnorm_cols)
     }
   ),
   tar_target(
@@ -70,7 +71,7 @@ list(
     name = rf_hyperparameter_results,
     command = {
       rf_hyperparameter_settings <- make_rf_hyperparameter_settings(mtry_parameters = mtry_parameters, nodesize_parameters = nodesize_parameters, ntree_parameters = ntree_parameters)
-      result <- run_analysis_hyperparameters(n = 200, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings = rf_hyperparameter_settings, covars = abnorm_cols)
+      result <- run_analysis_hyperparameters(n = 200, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings = rf_hyperparameter_settings, covars = abnorm_cols, model_covars = covar_no_age)
       result
     },
     batches = 2,
@@ -79,14 +80,14 @@ list(
   tar_target(
     name = rf_hyperparameter_results_tables,
     command = {
-      rf_hyperparameter_results_tables <- make_rf_hyperparameter_results_tables(rf_hyperparameter_results = rf_hyperparameter_results, variable_names = abnorm_cols)
+      rf_hyperparameter_results_tables <- make_rf_hyperparameter_results_tables(rf_hyperparameter_results = rf_hyperparameter_results, variable_names = abnorm_cols, rank_covars = abnorm_cols)
     }
   ),
   tar_rep(
     name = rf_vimp_mc_distribution,
     command = {
       rf_hyperparameter_settings <- list(setting = c(8,5,25))
-      result <- run_analysis_hyperparameters(n = 2000, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings = rf_hyperparameter_settings)
+      result <- run_analysis_hyperparameters(n = 2000, effects_first_order = effects_first_order, effects_interactions = effects_interactions, rf_hyperparameter_settings = rf_hyperparameter_settings, covars = abnorm_cols, model_covars = covar_no_age)
       result
     },
     batches = 10,
@@ -95,9 +96,9 @@ list(
   tar_target(
     name = rf_vimp_mc_distribution_plot,
     command = {
-      rf_vimp_mc_distribution_results_long <- make_simulation_results_long(rf_vimp_mc_distribution)
+      rf_vimp_mc_distribution_results_long <- make_simulation_results_long(rf_vimp_mc_distribution, rank_covars = abnorm_cols)
       plot_data <- rf_vimp_mc_distribution_results_long[rf_vimp_mc_distribution_results_long$scale == 'rank', c('variable', 'measure', 'value')]
-      plot <- make_rank_distribution_plot(plot_data = plot_data, variables = names(effects_first_order)[1:11])
+      plot <- make_rank_distribution_plot(plot_data = plot_data, variables = abnorm_cols)
       plot
     }
   )

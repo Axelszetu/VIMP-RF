@@ -1,8 +1,11 @@
 #Function to make tables comparing VIMP rankins across hyperparameter values for each measure
-make_rf_hyperparameter_results_tables <- function(rf_hyperparameter_results, variable_names) {
+make_rf_hyperparameter_results_tables <- function(rf_hyperparameter_results,
+                                                  variable_names = rank_covars,
+                                                  rank_covars = abnorm_cols) {
+  validate_covars(variable_names, rank_covars, "variable_names")
   
   simulation_results_long <-
-    make_simulation_results_long(rf_hyperparameter_results)
+    make_simulation_results_long(rf_hyperparameter_results, rank_covars = rank_covars)
   
   hyperparameter_settings <- list(
     mtry = c(
