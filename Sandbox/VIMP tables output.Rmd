@@ -26,12 +26,17 @@ knitr::kable(
 ## Ranks
 
 Rank 1 indicates the variable ranked as most important. For minimal depth,
-smaller values receive better ranks.
+smaller values receive better ranks. ATE measures are ranked by decreasing
+absolute magnitude, while permutation VIMP is ranked by decreasing signed value.
+Raw ATE values retain the sign of the mean predicted Y=1 risk at X=1 minus that
+at X=0. Exact ties receive average ranks; missing or nonfinite values in the
+comparison set stop ranking. The Effects column retains its signed coefficient
+ordering and is not a common importance target across methods.
 
 ```{r ranked-table}
 knitr::kable(
   result_ranked,
-  digits = 0,
+  digits = 1,
   caption = "Ranks of variable importance measures and estimated effects"
 )
 ```

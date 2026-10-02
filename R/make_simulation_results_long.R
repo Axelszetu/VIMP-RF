@@ -73,6 +73,11 @@ make_simulation_results_long <- function(rf_hyperparameter_results,
                 
                 values <- numeric_result[[measure_name]]
                 validate_covars(rank_covars, names(values), "rank_covars")
+                invalid <- rank_covars[!is.finite(values[rank_covars])]
+                if (length(invalid) > 0L) {
+                  stop("Cannot rank nonfinite ", measure_name, " values in simulation ",
+                       i, ", setting ", setting_name, " for: ", paste(invalid, collapse = ", "))
+                }
                 
                 data.frame(
                   simulation = i,
@@ -102,16 +107,16 @@ make_simulation_results_long <- function(rf_hyperparameter_results,
       dplyr::mutate(
         value = if (dplyr::first(measure) == "md") {
           
-          rank(value)
+          rank(value, ties.method = "average")
           
         } else if (dplyr::first(measure) == "perm") {
           
-          rank(-value)
+          rank(-value, ties.method = "average")
           
         } else {
           
-          # ATE and ATE_logreg
-          rank(-abs(value))
+          #ATE and ATE_logreg: rank magnitude, retaining signed numeric rows.
+          rank(-abs(value), ties.method = "average")
         },
         scale = "rank"
       ) |>

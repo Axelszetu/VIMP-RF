@@ -22,13 +22,21 @@ make_vimp_table <- function(perm_vimp, minimal_depth_vimp, ATE_rf, ATE_logreg, e
     row.names = name_order,
     check.names = FALSE
   )
+  for (measure in names(result_raw)) {
+    invalid <- name_order[!is.finite(result_raw[[measure]])]
+    if (length(invalid) > 0L) {
+      stop("Cannot rank nonfinite ", measure, " values for: ", paste(invalid, collapse = ", "))
+    }
+  }
   
+  #Rank 1 is most important. ATE uses magnitude; raw contrasts keep their signs.
+  #Exact ties receive their average rank, without random tie breaking.
   result_ranked <- data.frame(
-    "Effects" = rank(-effects),
-    "Permutation" = rank(-perm_vimp)[name_order],
-    "Minimal depth" = rank(minimal_depth_vimp)[name_order],
-    "ATE RF" = rank(-ATE_rf)[name_order],
-    "ATE logreg" = rank(-ATE_logreg)[name_order],
+    "Effects" = rank(-effects, ties.method = "average"),
+    "Permutation" = rank(-perm_vimp, ties.method = "average")[name_order],
+    "Minimal depth" = rank(minimal_depth_vimp, ties.method = "average")[name_order],
+    "ATE RF" = rank(-abs(ATE_rf), ties.method = "average")[name_order],
+    "ATE logreg" = rank(-abs(ATE_logreg), ties.method = "average")[name_order],
     row.names = name_order,
     check.names = FALSE
   )
