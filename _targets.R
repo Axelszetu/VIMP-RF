@@ -84,6 +84,30 @@ list(
     }
   ),
   tar_rep(
+    name = rf_hyperparameter_results_permuted_null,
+    command = {
+      rf_hyperparameter_settings <- make_rf_hyperparameter_settings(
+        mtry_parameters = mtry_parameters, nodesize_parameters = nodesize_parameters,
+        ntree_parameters = ntree_parameters
+      )
+      run_permuted_null_hyperparameters(
+        data = simulated_data, rf_hyperparameter_settings = rf_hyperparameter_settings,
+        covars = abnorm_cols, model_covars = covar_no_age
+      )
+    },
+    batches = 2,
+    reps = 2
+  ),
+  tar_target(
+    name = rf_hyperparameter_results_tables_permuted_null,
+    command = {
+      make_rf_hyperparameter_results_tables(
+        rf_hyperparameter_results = rf_hyperparameter_results_permuted_null,
+        variable_names = abnorm_cols, rank_covars = abnorm_cols
+      )
+    }
+  ),
+  tar_rep(
     name = rf_vimp_mc_distribution,
     command = {
       rf_hyperparameter_settings <- list(setting = c(8,5,25))
