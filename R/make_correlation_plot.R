@@ -3,13 +3,16 @@ if(FALSE){
   plot <- make_correlation_plot(data = test_data[,..abnorm_cols])
   plot
 }
-make_correlation_plot <- function(data){
-  cov_mat <- cov(data)
+make_correlation_plot <- function(data, display_names = NULL){
+  if (!is.null(display_names)) {
+    validate_display_names(colnames(data), display_names)
+  }
+  cor_mat <- cor(data)
   
-  cov_long <- as.data.frame(as.table(cov_mat))
-  names(cov_long) <- c("var1", "var2", "correlation")
+  cor_long <- as.data.frame(as.table(cor_mat))
+  names(cor_long) <- c("var1", "var2", "correlation")
   
-  ggplot(cov_long, aes(x = var1, y = var2, fill = correlation)) +
+  p <- ggplot(cor_long, aes(x = var1, y = var2, fill = correlation)) +
     geom_tile() +
     scale_fill_gradient2(
       midpoint = 0,
@@ -21,4 +24,10 @@ make_correlation_plot <- function(data){
     theme(
       axis.text.x = element_text(angle = 45, hjust = 1)
     )
+  if (!is.null(display_names)) {
+    p <- p +
+      scale_x_discrete(labels = display_names) +
+      scale_y_discrete(labels = display_names)
+  }
+  p
 }

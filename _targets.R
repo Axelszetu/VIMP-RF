@@ -98,7 +98,8 @@ list(
     command = {
       rf_vimp_mc_distribution_results_long <- make_simulation_results_long(rf_vimp_mc_distribution, rank_covars = abnorm_cols)
       plot_data <- rf_vimp_mc_distribution_results_long[rf_vimp_mc_distribution_results_long$scale == 'rank', c('variable', 'measure', 'value')]
-      plot <- make_rank_distribution_plot(plot_data = plot_data, variables = abnorm_cols)
+      plot <- make_rank_distribution_plot(plot_data = plot_data, variables = abnorm_cols,
+                                          display_names = ecg_display_names)
       plot
     }
   )

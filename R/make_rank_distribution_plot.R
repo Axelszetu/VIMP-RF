@@ -5,10 +5,14 @@ make_rank_distribution_plot <- function(
     conf_level = 0.95,
     n_boot = 2000,
     show_violin = TRUE,
-    show_errorbar = TRUE
+    show_errorbar = TRUE,
+    display_names = NULL
 ) {
   #Only select displayed variables; retain their previously computed ranks.
   validate_covars(variables, as.character(plot_data$variable), "variables")
+  if (!is.null(display_names)) {
+    validate_display_names(variables, display_names)
+  }
   
   library(ggplot2)
   library(dplyr)
@@ -122,5 +126,8 @@ make_rank_distribution_plot <- function(
       legend.position = "bottom"
     )
   
+  if (!is.null(display_names)) {
+    p <- p + scale_y_discrete(labels = display_names)
+  }
   p
 }
