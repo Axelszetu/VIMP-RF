@@ -3,10 +3,12 @@ if(FALSE){
   n = 100
 }
 
-#Temporary implementation with made-up effect sizes to be used until synthesize script is exported from DST
+#Temporary implementation with made-up effect sizes
 sim_OHCA_ECG_data <- function(n = 100, effects_first_order, effects_interactions = NULL){
   data <- synthesize_ECG_OHCA_Rcode(n)
-  data1 <- data[,c(1,6:46)]
+  binary_covars <- setdiff(names(data), c("ecg_age", "time.event.0", "time.event.1",
+                                         "time.event.2", "study_time_num", "new_event"))
+  data1 <- data[, ..binary_covars]
   #effects <- seq(from = 1, to = 0, length.out = 42)*effect_scale
   first_order_term <- as.matrix(data1)%*%effects_first_order
   interaction_term <- numeric(length = n)
