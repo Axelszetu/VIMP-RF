@@ -22,7 +22,37 @@ ecg_display_names <- c(
   qtcprol_all = "Prolonged QTc interval"
 )
 comorbs <- c("cancer", "cardiomp", "cerebro_vasc", "cong_hd", "copd", "hf", "ihd", "liver", "peri_vasc", "prev_mi", "renal", "valve_hd", "other_arrhythm", "other_card", "afib_aflu", "hypertension")
+comorb_display_names <- c(
+  cancer = "Malignant disease",
+  cardiomp = "Cardiomyopathy",
+  cerebro_vasc = "Cerebrovascular disease",
+  cong_hd = "Congenital heart disease",
+  copd = "Chronic obstructive pulmonary disease",
+  hf = "Heart failure",
+  ihd = "Ischaemic heart disease",
+  liver = "Liver disease",
+  peri_vasc = "Peripheral vascular disease",
+  prev_mi = "Previous myocardial infarction",
+  renal = "Renal disease",
+  valve_hd = "Valvular heart disease",
+  other_arrhythm = "Other cardiac arrhythmias",
+  other_card = "Other cardiac diseases",
+  afib_aflu = "Atrial fibrillation or flutter",
+  hypertension = "Hypertension"
+)
 drugs <- c("statin_hyperlipidemia", "diabetes_med", "vasodilator", "digoxin", "antiarrhythmics", "betablocker", "ca_channel_blocker", "other_qt_prolong")
+# Lipid-modifying and glucose-lowering drug use also define hyperlipidemia and
+# diabetes, respectively, in the Hindborg manuscript.
+drug_display_names <- c(
+  statin_hyperlipidemia = "Lipid-modifying drugs",
+  diabetes_med = "Glucose-lowering drugs",
+  vasodilator = "Vasodilators",
+  digoxin = "Digoxin",
+  antiarrhythmics = "Antiarrhythmics",
+  betablocker = "Beta blockers",
+  ca_channel_blocker = "Calcium channel blockers",
+  other_qt_prolong = "Other QT-prolonging medications"
+)
 covar <- c(abnorm_cols, "ecg_age", "sex", drugs, comorbs)
 covar_no_age <- c(abnorm_cols, "sex", drugs, comorbs)
 effects_first_order <- c(rep(1,4), rep(0.5,4), numeric(length = 34))
