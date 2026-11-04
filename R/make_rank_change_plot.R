@@ -5,7 +5,6 @@ make_rank_change_plot <- function(rank_table,
                                   title = NULL) {
   
   plot_data <- rank_table |>
-    rownames_to_column("variable") |>
     select(
       variable,
       low = all_of(low),
@@ -23,11 +22,8 @@ make_rank_change_plot <- function(rank_table,
     levels = c("low", "reference", "high")
   )
   
-  # Display the best-ranked variables at the top
-  variable_order <- plot_data |>
-    filter(setting == "reference") |>
-    arrange(desc(mean_rank)) |>
-    pull(variable)
+  # Display variables in input row order, from top to bottom
+  variable_order <- rev(unique(plot_data$variable))
   
   plot_data$variable <- factor(
     plot_data$variable,
