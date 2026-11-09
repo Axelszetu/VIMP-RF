@@ -29,5 +29,5 @@ make_correlation_plot <- function(data, display_names = NULL){
       scale_x_discrete(labels = display_names) +
       scale_y_discrete(labels = display_names)
   }
-  p
+  out <- list(p, cor_max)
 }
