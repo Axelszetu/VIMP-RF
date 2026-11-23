@@ -126,5 +126,36 @@ list(
                                           display_names = ecg_display_names)
       plot
     }
+  ),
+  tar_target(
+    name = rf_tuning_grid,
+    command = expand.grid(
+      mtry = c(1L, 3L, 6L, 21L, 32L, 42L),
+      nodesize = c(4L, 16L, 64L, 200L, 2000L),
+      ntree = 50L,
+      KEEP.OUT.ATTRS = FALSE
+    )
+  ),
+  tar_target(
+    name = rf_tuning_results,
+    command = {
+      results <- run_rf_repetitions(
+        data = simulated_data,
+        k = 10L,
+        ntree = rf_tuning_grid$ntree,
+        mtry = rf_tuning_grid$mtry,
+        nodesize = rf_tuning_grid$nodesize,
+        model_covars = covar_no_age,
+        rank_covars = abnorm_cols,
+        include_brier = TRUE
+      )
+      data.frame(
+        mtry = rf_tuning_grid$mtry,
+        nodesize = rf_tuning_grid$nodesize,
+        ntree = rf_tuning_grid$ntree,
+        results
+      )
+    },
+    pattern = map(rf_tuning_grid)
   )
 )

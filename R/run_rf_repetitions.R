@@ -2,7 +2,7 @@
 # Y must be a factor with levels 0 and 1. Load randomForestSRC before calling.
 run_rf_repetitions <- function(data, k, ntree, mtry, nodesize,
                                model_covars, rank_covars = model_covars,
-                               measures = c("perm", "md", "ATE")) {
+                               measures = c("perm", "md", "ATE"), include_brier = FALSE) {
   if (length(k) != 1L || !is.finite(k) || k < 1 || k != floor(k)) {
     stop("k must be a positive integer.")
   }
@@ -37,7 +37,15 @@ run_rf_repetitions <- function(data, k, ntree, mtry, nodesize,
                  score = unname(scores),
                  rank = unname(rank(ranking_scores, ties.method = "average")))
     })
-    do.call(rbind, results)
+    results <- do.call(rbind, results)
+    if (include_brier) {
+      risk <- forest$predicted.oob[, "1"]
+      if (length(risk) != nrow(data) || any(!is.finite(risk))) {
+        stop("Incomplete out-of-bag predictions in run ", run, ".")
+      }
+      results$brier_oob <- mean(((data$Y == "1") - risk)^2)
+    }
+    results
   })
   do.call(rbind, runs)
 }
