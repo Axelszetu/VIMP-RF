@@ -65,6 +65,15 @@ list(
     })
   ),
   tar_target(
+    name = rf_IPA_data,
+    command = {
+      five_years <- 5 * 365.25
+      data <- subset(IPA_comparison_data, new_event != "0" | study_time_num >= five_years)
+      data$Y <- as.integer(data$new_event == "1" & data$study_time_num <= five_years)
+      data
+    }
+  ),
+  tar_target(
     name = IPA_rf_bin,
     command = lapply(ipa_covariate_sets, function(covars) {
       get_rf_IPA(rf_IPA_data = rf_IPA_data, setting = c(16, 20, 50), covars = covars)

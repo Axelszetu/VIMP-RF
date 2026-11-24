@@ -7,9 +7,9 @@ get_IPA_CSC <- function(IPA_CSC_data, covars){
     x <- riskRegression::Score(list(csc_model),
                                 data = test,
                                 formula = Hist(study_time_num, new_event) ~ 1,
-                                times = 1826.25
-                                summary = "IPA"
-                                metrics = "brier"
+                                times = 1826.25,
+                                summary = "IPA",
+                                metrics = "brier",
                                 contrasts = FALSE,
                                 se.fit = FALSE)
     return(x)
