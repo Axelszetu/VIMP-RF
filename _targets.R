@@ -59,6 +59,18 @@ list(
     }
   ),
   tar_target(
+    name = IPA_CSC,
+    command = lapply(ipa_covariate_sets, function(covars) {
+      get_IPA_CSC(IPA_CSC_data = IPA_CSC_data, covars = covars)
+    })
+  ),
+  tar_target(
+    name = IPA_rf_bin,
+    command = lapply(ipa_covariate_sets, function(covars) {
+      get_rf_IPA(rf_IPA_data = rf_IPA_data, setting = c(16, 20, 50), covars = covars)
+    })
+  ),
+  tar_target(
     name = rf_IPA_by_lambda,
     command = {
       get_rf_IPA_by_lambda(

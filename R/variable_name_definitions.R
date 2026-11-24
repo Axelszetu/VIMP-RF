@@ -60,6 +60,12 @@ effects_interactions <- c(1,1,1)
 names(effects_interactions) <- c("1x2", "5x6", "9x10")
 names(effects_first_order) <- c("sex", abnorm_cols, drugs, comorbs)
 
+ipa_covariate_sets <- list(
+  ecg = abnorm_cols,
+  background = setdiff(covar_no_age, abnorm_cols),
+  ecg_and_background = covar_no_age
+)
+
 #Hyperparameters to examine
 mtry_parameters <- c(3,8,16)
 nodesize_parameters <- c(1,5,20)
