@@ -1,6 +1,7 @@
 get_rf_IPA <- function(rf_IPA_data, setting, covars){
-  train <- rf_IPA_data[1:floor(nrow(rf_IPA_data)/2)]
-  test <- rf_IPA_data[floor(nrow(rf_IPA_data)/2):nrow(rf_IPA_data)]
+  midpoint <- nrow(rf_IPA_data) %/% 2L
+  train <- rf_IPA_data[seq_len(midpoint), ]
+  test <- rf_IPA_data[seq.int(midpoint + 1L, nrow(rf_IPA_data)), ]
   mtry <- setting[[1]]
   nodesize <- setting[[2]]
   ntree <- setting[[3]]
